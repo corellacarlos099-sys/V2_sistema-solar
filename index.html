@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Sistema Solar 3D</title>
+    <meta name="theme-color" content="#000000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icon.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="icon.jpg" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="loading">
+      <div class="ring"></div>
+      <p>Generando el Sistema Solar…</p>
+    </div>
+
+    <div id="canvas-wrap"></div>
+
+    <div id="hint">Arrastra para rotar · Pellizca para zoom</div>
+
+    <div class="hud" id="topbar">
+      <div id="title"><b>Sistema Solar</b> · 3D</div>
+    </div>
+
+    <div class="hud" id="signature"><b>Dev</b>Carlos</div>
+
+    <div class="hud" id="controls-col">
+      <div
+        class="icon-btn active"
+        id="btn-autorotate"
+        title="Rotación automática"
+      >
+        ⟳
+      </div>
+      <div class="icon-btn" id="btn-reset" title="Vista general">⌂</div>
+      <div class="icon-btn" id="btn-music" title="Música">♪</div>
+      <div class="icon-btn" id="btn-sliders" title="Ajustes">⚙</div>
+      <div class="icon-btn" id="btn-fullscreen" title="Pantalla completa">
+        ⛶
+      </div>
+      <div class="icon-btn" id="btn-help" title="Ayuda">?</div>
+    </div>
+
+    <div class="hud" id="bottom-panel">
+      <div id="sliders-panel">
+        <div class="slider-row">
+          <label>Órbita</label>
+          <input
+            type="range"
+            id="slider-orbit"
+            min="0"
+            max="4"
+            step="0.05"
+            value="1"
+          />
+        </div>
+        <div class="slider-row">
+          <label>Cámara</label>
+          <input
+            type="range"
+            id="slider-camspeed"
+            min="0.2"
+            max="3"
+            step="0.05"
+            value="1"
+          />
+        </div>
+        <div class="slider-row">
+          <label>Volumen</label>
+          <input
+            type="range"
+            id="slider-volume"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.5"
+          />
+        </div>
+        <div class="slider-row">
+          <label for="chk-labels">Etiquetas</label>
+          <input type="checkbox" id="chk-labels" checked />
+        </div>
+        <div class="slider-row">
+          <label for="chk-orbits">Órbitas</label>
+          <input type="checkbox" id="chk-orbits" checked />
+        </div>
+      </div>
+      <div id="planet-bar"></div>
+    </div>
+
+    <div id="info-card">
+      <h2 id="info-name">—</h2>
+      <div id="info-grid"></div>
+      <p id="info-fact"></p>
+      <button id="info-close">Ver todo el sistema</button>
+    </div>
+
+    <div id="labels"></div>
+
+    <div id="help">
+      <div class="help-card">
+        <h2>Cómo explorar</h2>
+        <ul>
+          <li>Arrastra con un dedo para rotar la vista.</li>
+          <li>
+            Pellizca para acercar o alejar; con dos dedos mueves la cámara.
+          </li>
+          <li>
+            Toca un planeta, el Sol, o usa la barra de abajo para ir a él.
+          </li>
+        </ul>
+        <p>
+          Los tamaños y las distancias están comprimidos: a escala real, los
+          planetas serían puntos casi invisibles.
+        </p>
+        <button id="help-close">Entendido</button>
+      </div>
+    </div>
+
+    <audio id="bg-music" loop preload="none">
+      <source src="solitude.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      window.PLANET_TEXTURES = {}; // filled in below by build step
+    </script>
+    <script>
+      if ("serviceWorker" in navigator)
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
