@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=3" />
   </head>
   <body>
     <div id="loading">
@@ -115,23 +115,16 @@
         <h2>Cómo explorar</h2>
         <ul>
           <li>Arrastra con un dedo para rotar la vista.</li>
-          <li>
-            Pellizca para acercar o alejar; con dos dedos mueves la cámara.
-          </li>
-          <li>
-            Toca un planeta, el Sol, o usa la barra de abajo para ir a él.
-          </li>
+          <li>Pellizca para acercar o alejar; con dos dedos mueves la cámara.</li>
+          <li>Toca un planeta, el Sol, o usa la barra de abajo para ir a él.</li>
         </ul>
-        <p>
-          Los tamaños y las distancias están comprimidos: a escala real, los
-          planetas serían puntos casi invisibles.
-        </p>
+        <p>Los tamaños y las distancias están comprimidos: a escala real, los planetas serían puntos casi invisibles.</p>
         <button id="help-close">Entendido</button>
       </div>
     </div>
 
     <audio id="bg-music" loop preload="none">
-      <source src="solitude.mp3" type="audio/mpeg" />
+      <source src="Interestelar.mp3" type="audio/mpeg" />
     </audio>
 
     <script>
@@ -141,6 +134,23 @@
       if ("serviceWorker" in navigator)
         navigator.serviceWorker.register("sw.js").catch(() => {});
     </script>
-    <script src="script.js"></script>
+    <script>
+      window.addEventListener("error", (e) => {
+        const l = document.getElementById("loading");
+        if (!l) return;
+        const p = document.createElement("p");
+        p.style.cssText = "color:#f99;font-size:12px;padding:0 20px;text-align:center";
+        p.textContent = e.message + " (" + String(e.filename || "").split("/").pop() + ":" + e.lineno + ")";
+        l.appendChild(p);
+      });
+      setTimeout(() => {
+        const l = document.getElementById("loading");
+        if (l && l.style.display !== "none") {
+          l.style.opacity = "0";
+          setTimeout(() => (l.style.display = "none"), 650);
+        }
+      }, 12000);
+    </script>
+    <script src="script.js?v=3"></script>
   </body>
 </html>
